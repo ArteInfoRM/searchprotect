@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.1] - 2026-06-26
+
+### Fixed
+
+- Fixed PrestaShop validator coding standard warnings in module guard files.
+- Added explicit visibility to module constants.
+
 ## [1.0.0] — 2026-03-25
 
 ### Added
@@ -31,5 +38,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-<!-- [Unreleased]: https://github.com/tecnoacquisti/searchprotect/compare/v1.0.0...HEAD -->
-<!-- [1.0.0]: https://github.com/tecnoacquisti/searchprotect/releases/tag/v1.0.0 -->
+<!-- [Unreleased]: https://github.com/ArteInfoRM/searchprotect/compare/v1.0.1...HEAD -->
+<!-- [1.0.1]: https://github.com/ArteInfoRM/searchprotect/compare/v1.0.0...v1.0.1 -->
+<!-- [1.0.0]: https://github.com/ArteInfoRM/searchprotect/releases/tag/v1.0.0 -->

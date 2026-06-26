@@ -7,7 +7,6 @@
  * @copyright 2026 Tecnoacquisti.com - Arte e Informatica di Loris Modena e c. s.a.s.
  * @license   MIT
  */
-
 if (!defined('_PS_VERSION_')) {
     exit;
 }

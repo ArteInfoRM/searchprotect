@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SearchProtect - PrestaShop Module
  * Protects the search endpoint from DoS/DDoS attacks via malformed or oversized queries.
@@ -7,25 +8,24 @@
  * @copyright 2026 Tecnoacquisti.com - Arte e Informatica di Loris Modena e c. s.a.s.
  * @license   MIT
  */
-
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
 class SearchProtect extends Module
 {
-    const DEFAULT_MAX_LENGTH = 100;
-    const DEFAULT_MAX_AMPS = 5;
-    const DEFAULT_MAX_PAGES = 3;
-    const DEFAULT_BLOCK_DURATION = 3600;
-    const DEFAULT_LOG_ENABLED = true;
-    const CACHE_KEY_PREFIX = 'SP_BLOCK_';
+    private const DEFAULT_MAX_LENGTH = 100;
+    private const DEFAULT_MAX_AMPS = 5;
+    private const DEFAULT_MAX_PAGES = 3;
+    private const DEFAULT_BLOCK_DURATION = 3600;
+    private const DEFAULT_LOG_ENABLED = true;
+    private const CACHE_KEY_PREFIX = 'SP_BLOCK_';
 
     public function __construct()
     {
         $this->name = 'searchprotect';
         $this->tab = 'others';
-        $this->version = '1.0.0';
+        $this->version = '1.0.1';
         $this->author = 'Tecnoacquisti.com';
         $this->need_instance = 0;
         $this->bootstrap = true;
