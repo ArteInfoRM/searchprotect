@@ -1,0 +1,30 @@
+# Set LF line endings for all text files.
+* text=auto eol=lf
+
+# Keep binary assets untouched.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+*.mp4 binary
+*.mp3 binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+
+# Exclude non-release files from GitHub archives.
+.gitignore export-ignore
+.gitattributes export-ignore
+.editorconfig export-ignore
+/tests/ export-ignore
+/.github/ export-ignore
+/phpunit.xml.dist export-ignore
+/build.sh export-ignore
+/Makefile export-ignore
+/config*.xml export-ignore
+/dist/ export-ignore

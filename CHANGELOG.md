@@ -1,0 +1,35 @@
+# Changelog
+
+All notable changes to **SearchProtect** are documented in this file.
+
+The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+---
+
+## [1.0.0] — 2026-03-25
+
+### Added
+
+- Initial release.
+- Hook `actionFrontControllerInitBefore` to intercept search requests before any DB query.
+- Six protection rules: `query_too_long`, `amp_flood`, `page_injection`,
+  `querystring_too_long`, `encoding_abuse`, `iqit_amp_page_combo`.
+- Detection of native PrestaShop search controller and localised search slugs
+  (`/busqueda`, `/recherche`, `/ricerca`).
+- Detection of third-party search modules: IQITSearch, PS Searchbar,
+  ElasticSearch, nrtSearch, SphinxSearch.
+- IP blocking via PrestaShop cache (expiry timestamp stored as value) with
+  file-based JSON fallback in `var/logs/searchprotect_blocks.json`.
+- `HTTP 429 Too Many Requests` response with `Retry-After` header for blocked requests.
+- DB logging of blocked attempts in `ps_searchprotect_log`.
+- Back-office configuration page with `HelperForm` (all thresholds configurable).
+- Smarty template `views/templates/admin/logs.tpl` for the last 100 blocked requests.
+- Italian translation (`translations/it.php`).
+- Security files: `index.php` in all directories, `.htaccess` at module root.
+- `config.xml`, `LICENSE` (MIT), `README.md`, `CHANGELOG.md`.
+
+---
+
+<!-- [Unreleased]: https://github.com/tecnoacquisti/searchprotect/compare/v1.0.0...HEAD -->
+<!-- [1.0.0]: https://github.com/tecnoacquisti/searchprotect/releases/tag/v1.0.0 -->
