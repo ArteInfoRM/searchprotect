@@ -1,5 +1,4 @@
 <?php
-
 /**
  * SearchProtect - PrestaShop Module
  * Protects the search endpoint from DoS/DDoS attacks via malformed or oversized queries.
@@ -25,7 +24,7 @@ class SearchProtect extends Module
     {
         $this->name = 'searchprotect';
         $this->tab = 'others';
-        $this->version = '1.0.1';
+        $this->version = '1.0.2';
         $this->author = 'Tecnoacquisti.com';
         $this->need_instance = 0;
         $this->bootstrap = true;

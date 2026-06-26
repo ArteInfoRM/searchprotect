@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @author    Tecnoacquisti.com
  * @copyright 2026 Tecnoacquisti.com - Arte e Informatica di Loris Modena e c. s.a.s.
