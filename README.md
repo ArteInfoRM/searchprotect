@@ -68,6 +68,8 @@ Blocked IPs are stored in two places:
 
 The default block duration is **1 hour** (3 600 seconds, configurable up to 24 hours).
 
+SearchProtect uses PrestaShop `Tools::getRemoteAddr()` for client IP detection. If your shop runs behind a reverse proxy or CDN, configure PrestaShop's trusted proxy/reverse proxy settings where supported and verify the resolved IP on your PrestaShop version so SearchProtect logs and blocks the intended client address.
+
 ## Directory structure
 
 ```

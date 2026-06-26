@@ -24,7 +24,7 @@ class SearchProtect extends Module
     {
         $this->name = 'searchprotect';
         $this->tab = 'others';
-        $this->version = '1.0.2';
+        $this->version = '1.0.3';
         $this->author = 'Tecnoacquisti.com';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -324,24 +324,9 @@ class SearchProtect extends Module
 
     private function getClientIp()
     {
-        $headers = [
-            'HTTP_CF_CONNECTING_IP',
-            'HTTP_X_FORWARDED_FOR',
-            'HTTP_X_REAL_IP',
-            'REMOTE_ADDR',
-        ];
+        $ip = Tools::getRemoteAddr();
 
-        foreach ($headers as $header) {
-            if (!empty($_SERVER[$header])) {
-                $ip = trim(explode(',', $_SERVER[$header])[0]);
-
-                if (filter_var($ip, FILTER_VALIDATE_IP)) {
-                    return $ip;
-                }
-            }
-        }
-
-        return '0.0.0.0';
+        return $ip ?: (isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0');
     }
 
     // -------------------------------------------------------------------------

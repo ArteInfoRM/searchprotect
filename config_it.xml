@@ -2,7 +2,7 @@
 <module>
     <name>searchprotect</name>
     <displayName><![CDATA[Search Protect]]></displayName>
-    <version><![CDATA[1.0.2]]></version>
+    <version><![CDATA[1.0.3]]></version>
     <description><![CDATA[Blocca query di ricerca malformate o troppo lunghe per prevenire attacchi DoS su MariaDB.]]></description>
     <author><![CDATA[Tecnoacquisti.com]]></author>
     <tab><![CDATA[others]]></tab>
