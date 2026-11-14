@@ -49,3 +49,9 @@ $_MODULE['<{searchprotect}prestashop>copyright_1741ec6ed69cf571adac9eeb641c4f87'
 $_MODULE['<{searchprotect}prestashop>copyright_04a14c4bfab97f16089cde138d3b9476'] = 'Check-up';
 $_MODULE['<{searchprotect}prestashop>copyright_affa9089ac0a7a008631522d445df967'] = 'Hosting PrestaShop';
 $_MODULE['<{searchprotect}prestashop>copyright_fd22b349b10c8a5c59ec7d07450e6840'] = 'Tecnoacquisti.com® è un marchio registrato di Arte e Informatica';
+
+$_MODULE['<{searchprotect}prestashop>searchprotect_e94181e13452968146a1987ce5fe6513'] = 'La ricerca non è valida.';
+
+$_MODULE['<{searchprotect}prestashop>searchprotect_e86703e4e99a3afc1b01db90ed3a4ace'] = 'Torna alla homepage e prova una nuova ricerca.';
+
+$_MODULE['<{searchprotect}prestashop>searchprotect_82ada3ecfa7c9965b4cee97b53f5e807'] = 'Torna alla homepage';

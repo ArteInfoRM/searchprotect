@@ -120,7 +120,7 @@
 <h2>The problem</h2>
 <p>Attackers flood the PrestaShop search endpoint (<code>/search</code>, <code>/busqueda</code>, and third-party modules such as <strong>IQITSearch</strong>) with requests whose <code>s=</code> parameter contains hundreds of nested <code>&amp;amp;</code> entities and repeated <code>?page=N</code> injections. Each request triggers a full MariaDB full-text query, causing CPU/load spikes that can take the site offline.</p>
 <h2>How it works</h2>
-<p>The module hooks into <code>actionFrontControllerInitBefore</code> — the earliest possible point in the PrestaShop lifecycle — and inspects the query <strong>before</strong> any controller or database code runs. Offending IPs receive a <code>429 Too Many Requests</code> response and are temporarily blocked. Non-string search values (for example <code>s[]=example</code>) are rejected with <code>400 Bad Request</code>, without a temporary IP block. Their contents are not logged; the log stores a fixed placeholder instead.</p>
+<p>The module hooks into <code>actionFrontControllerInitBefore</code> — the earliest possible point in the PrestaShop lifecycle — and inspects the query <strong>before</strong> any controller or database code runs. Offending IPs receive a <code>429 Too Many Requests</code> response and are temporarily blocked. Non-string search values (for example <code>s[]=example</code>) are rejected with <code>400 Bad Request</code>, without a temporary IP block. Their contents are not logged; the log stores a fixed placeholder instead. Browser requests display a translated error page with a link to the current shop homepage; AJAX/JSON requests receive a JSON error with HTTP 400.</p>
 <h2>Protection rules</h2>
 <table><thead><tr><th>Code</th><th>What is checked</th><th>Default threshold</th></tr></thead><tbody><tr><td><code>invalid_query_type</code></td><td>Search value is not a string (<code>s</code>, <code>search_query</code>, or <code>q</code>)</td><td>HTTP 400, no IP block</td></tr><tr><td><code>query_too_long</code></td><td>Raw length of <code>s=</code></td><td>100 chars</td></tr><tr><td><code>amp_flood</code></td><td>Repeated <code>&amp;amp;</code> entities after double URL-decode</td><td>5 occurrences</td></tr><tr><td><code>page_injection</code></td><td>Repeated <code>?page=</code> inside the query value</td><td>3 occurrences</td></tr><tr><td><code>querystring_too_long</code></td><td>Total length of <code>QUERY_STRING</code></td><td>2 000 chars</td></tr><tr><td><code>encoding_abuse</code></td><td>Chains of <code>%25</code> (recursive percent-encoding)</td><td>5 in a row</td></tr><tr><td><code>iqit_amp_page_combo</code></td><td>Amp-flooded <code>s=</code> combined with a separate <code>&amp;page=</code> param</td><td>—</td></tr><tr><td><code>ip_blocked</code></td><td>IP is already in the active block list</td><td>—</td></tr></tbody></table>
 <p>All thresholds are configurable from the back-office without editing code.</p>
@@ -178,6 +178,8 @@
 </ul>
 <h2>License</h2>
 <p><a href="LICENSE">MIT</a> © 2026 Tecnoacquisti.com - Arte e Informatica di Loris Modena e c. s.a.s.</p>
+<h2>Security and dependency information</h2>
+<p>See <a href="SECURITY.md">SECURITY.md</a> for reporting, update and deployment guidance, and <a href="THIRD-PARTY-NOTICES.md">THIRD-PARTY-NOTICES.md</a> for environment dependencies.</p>
 
 </main>
 </body>

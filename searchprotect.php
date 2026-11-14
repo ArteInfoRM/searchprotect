@@ -6,7 +6,7 @@
  * @author    Tecnoacquisti.com
  * @copyright 2026 Tecnoacquisti.com - Arte e Informatica di Loris Modena e c. s.a.s.
  * @license   MIT
- * @version   1.0.4
+ * @version   1.0.5
  */
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -25,7 +25,7 @@ class SearchProtect extends Module
     {
         $this->name = 'searchprotect';
         $this->tab = 'others';
-        $this->version = '1.0.4';
+        $this->version = '1.0.5';
         $this->author = 'Tecnoacquisti.com';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -309,6 +309,39 @@ class SearchProtect extends Module
     {
         if ($statusCode === 400) {
             header('HTTP/1.1 400 Bad Request');
+            header('Cache-Control: no-store');
+
+            $title = $this->l('The search is not valid.');
+            $message = $this->l('Return to the homepage and try a new search.');
+            $ajax = Tools::getValue('ajax');
+            $requestedWith = isset($_SERVER['HTTP_X_REQUESTED_WITH']) ? $_SERVER['HTTP_X_REQUESTED_WITH'] : '';
+            $accept = isset($_SERVER['HTTP_ACCEPT']) ? $_SERVER['HTTP_ACCEPT'] : '';
+
+            if (!empty($ajax) || strcasecmp($requestedWith, 'XMLHttpRequest') === 0
+                || stripos($accept, 'application/json') !== false) {
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode(['error' => true, 'message' => $title . ' ' . $message]);
+                exit;
+            }
+
+            $this->context->smarty->assign([
+                'searchprotect_title' => $title,
+                'searchprotect_message' => $message,
+                'searchprotect_home_label' => $this->l('Return to the homepage'),
+                'searchprotect_home_url' => $this->context->link->getPageLink(
+                    'index',
+                    null,
+                    (int) $this->context->language->id,
+                    null,
+                    false,
+                    (int) $this->context->shop->id
+                ),
+                'searchprotect_language' => $this->context->language->iso_code,
+                'searchprotect_rtl' => (bool) $this->context->language->is_rtl,
+            ]);
+            header('Content-Type: text/html; charset=utf-8');
+            echo $this->display(__FILE__, 'views/templates/front/invalid-search.tpl');
+            exit;
         } else {
             $statusCode = 429;
             header('HTTP/1.1 429 Too Many Requests');

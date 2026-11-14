@@ -22,7 +22,9 @@ PrestaShop lifecycle — and inspects the query **before** any controller or dat
 Offending IPs receive a `429 Too Many Requests` response and are temporarily blocked.
 Non-string search values (for example `s[]=example`) are rejected with
 `400 Bad Request`, without a temporary IP block. Their contents are not logged;
-the log stores a fixed placeholder instead.
+the log stores a fixed placeholder instead. Browser requests display a translated
+error page with a link to the current shop homepage; AJAX/JSON requests receive
+a JSON error with HTTP 400.
 
 ## Protection rules
 
@@ -106,3 +108,8 @@ searchprotect/
 ## License
 
 [MIT](LICENSE) © 2026 Tecnoacquisti.com - Arte e Informatica di Loris Modena e c. s.a.s.
+
+## Security and dependency information
+
+See [SECURITY.md](SECURITY.md) for reporting, update and deployment guidance,
+and [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) for environment dependencies.

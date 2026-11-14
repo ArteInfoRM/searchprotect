@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.5] - 2026-11-15
+
+### Changed
+
+- Add security reporting/deployment guidance and third-party dependency notices.
+- Record an internal CRA readiness review and release SBOM; no conformity claim.
+
+- Show a translated HTTP 400 page with a homepage link for invalid search values.
+- Return a translated JSON error for AJAX/JSON requests and keep technical details in logs.
+- Add Italian translations for the invalid search response.
+
 ## [1.0.4] - 2026-11-14
 
 ### Fixed
