@@ -6,6 +6,7 @@
  * @author    Tecnoacquisti.com
  * @copyright 2026 Tecnoacquisti.com - Arte e Informatica di Loris Modena e c. s.a.s.
  * @license   MIT
+ * @version   1.0.4
  */
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -24,7 +25,7 @@ class SearchProtect extends Module
     {
         $this->name = 'searchprotect';
         $this->tab = 'others';
-        $this->version = '1.0.3';
+        $this->version = '1.0.4';
         $this->author = 'Tecnoacquisti.com';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -149,6 +150,11 @@ class SearchProtect extends Module
 
         $reason = $this->validateQuery($query);
 
+        if ($reason === 'invalid_query_type') {
+            $this->logAttempt($ip, $query, $reason);
+            $this->denyRequest($reason, 400);
+        }
+
         if ($reason !== null) {
             $this->blockIp($ip);
             $this->logAttempt($ip, $query, $reason);
@@ -163,12 +169,16 @@ class SearchProtect extends Module
     /**
      * Returns a reason string when the query is malicious, null when it is clean.
      *
-     * @param string $query Raw value of the search parameter
+     * @param mixed $query Raw value of the search parameter
      *
      * @return string|null
      */
     private function validateQuery($query)
     {
+        if (!is_string($query)) {
+            return 'invalid_query_type';
+        }
+
         $maxLen = (int) Configuration::get('SP_MAX_LENGTH');
         $maxAmps = (int) Configuration::get('SP_MAX_AMPS');
         $maxPages = (int) Configuration::get('SP_MAX_PAGES');
@@ -205,7 +215,7 @@ class SearchProtect extends Module
             return 'encoding_abuse';
         }
 
-        // Rule 6: IQITSearch pattern — amp-flooded s= combined with a separate &page= param
+        // Rule 6: IQITSearch pattern - amp-flooded s= combined with a separate &page= param
         $pageParam = (int) Tools::getValue('page', 0);
 
         if ($pageParam > 0) {
@@ -295,12 +305,18 @@ class SearchProtect extends Module
     // DENY & LOG
     // -------------------------------------------------------------------------
 
-    private function denyRequest($reason)
+    private function denyRequest($reason, $statusCode = 429)
     {
-        header('HTTP/1.1 429 Too Many Requests');
-        header('Retry-After: ' . (int) Configuration::get('SP_BLOCK_DURATION'));
+        if ($statusCode === 400) {
+            header('HTTP/1.1 400 Bad Request');
+        } else {
+            $statusCode = 429;
+            header('HTTP/1.1 429 Too Many Requests');
+            header('Retry-After: ' . (int) Configuration::get('SP_BLOCK_DURATION'));
+        }
+
         header('Content-Type: text/plain; charset=utf-8');
-        echo '429 - Request blocked by SearchProtect (' . htmlspecialchars($reason) . ')';
+        echo $statusCode . ' - Request blocked by SearchProtect (' . htmlspecialchars($reason) . ')';
         exit;
     }
 
@@ -312,7 +328,7 @@ class SearchProtect extends Module
 
         Db::getInstance()->insert('searchprotect_log', [
             'ip' => pSQL($ip),
-            'query' => pSQL(mb_substr($query, 0, 500)),
+            'query' => pSQL(is_string($query) ? mb_substr($query, 0, 500) : '[invalid query type]'),
             'reason' => pSQL($reason),
             'blocked_at' => date('Y-m-d H:i:s'),
         ]);

@@ -20,11 +20,15 @@ full-text query, causing CPU/load spikes that can take the site offline.
 The module hooks into `actionFrontControllerInitBefore` — the earliest possible point in the
 PrestaShop lifecycle — and inspects the query **before** any controller or database code runs.
 Offending IPs receive a `429 Too Many Requests` response and are temporarily blocked.
+Non-string search values (for example `s[]=example`) are rejected with
+`400 Bad Request`, without a temporary IP block. Their contents are not logged;
+the log stores a fixed placeholder instead.
 
 ## Protection rules
 
 | Code | What is checked | Default threshold |
 |------|----------------|-------------------|
+| `invalid_query_type` | Search value is not a string (`s`, `search_query`, or `q`) | HTTP 400, no IP block |
 | `query_too_long` | Raw length of `s=` | 100 chars |
 | `amp_flood` | Repeated `&amp;` entities after double URL-decode | 5 occurrences |
 | `page_injection` | Repeated `?page=` inside the query value | 3 occurrences |

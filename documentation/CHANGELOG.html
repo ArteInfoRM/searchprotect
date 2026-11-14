@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>searchprotect - Changelog</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --text: #1f2933;
+            --muted: #5f6b7a;
+            --border: #d8dee6;
+            --panel: #f6f8fa;
+            --accent: #0b7285;
+        }
+        body {
+            margin: 0;
+            background: #fff;
+            color: var(--text);
+            font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+        }
+        main {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 32px 24px 56px;
+        }
+        h1, h2, h3, h4 {
+            line-height: 1.25;
+            margin: 1.8em 0 .6em;
+        }
+        h1 {
+            margin-top: 0;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            font-size: 2rem;
+        }
+        h2 {
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+            font-size: 1.45rem;
+        }
+        h3 {
+            font-size: 1.18rem;
+        }
+        p {
+            margin: .7em 0;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        blockquote {
+            margin: 1em 0;
+            padding: .7em 1em;
+            color: var(--muted);
+            border-left: 4px solid var(--border);
+            background: var(--panel);
+        }
+        code {
+            padding: .15em .35em;
+            border-radius: 4px;
+            background: var(--panel);
+            font-family: Consolas, Monaco, "Courier New", monospace;
+            font-size: .92em;
+        }
+        pre {
+            overflow: auto;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--panel);
+        }
+        pre code {
+            padding: 0;
+            background: transparent;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1em 0;
+        }
+        th, td {
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+        th {
+            background: var(--panel);
+            text-align: left;
+        }
+        ul, ol {
+            padding-left: 1.5em;
+        }
+        hr {
+            border: 0;
+            border-top: 1px solid var(--border);
+            margin: 2em 0;
+        }
+        .generated-note {
+            margin-bottom: 24px;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--panel);
+            color: var(--muted);
+            font-size: .92em;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <div class="generated-note">Generated from the Markdown source included with the module.</div>
+<h1>Changelog</h1>
+<p>All notable changes to <strong>SearchProtect</strong> are documented in this file.</p>
+<p>The format follows <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>, and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
+<hr>
+<h2>[1.0.4] - 2026-11-14</h2>
+<h3>Fixed</h3>
+<ul>
+<li>Reject non-string search parameters with HTTP 400 before string processing,</li>
+</ul>
+<p>  preventing fatal errors for requests such as <code>s[]=example</code>.</p>
+<ul>
+<li>Log a fixed placeholder for invalid parameter types without serializing their</li>
+</ul>
+<p>  contents or temporarily blocking the client IP. Existing abuse rules retain   HTTP 429 responses and IP blocking.</p>
+<h3>Changed</h3>
+<ul>
+<li>Include generated HTML documentation and protect template/configuration files</li>
+</ul>
+<p>  from direct Apache access in the release package.</p>
+<h2>[1.0.3] - 2026-06-26</h2>
+<h3>Fixed</h3>
+<ul>
+<li>Fixed client IP resolution so SearchProtect no longer trusts spoofable</li>
+</ul>
+<p>  <code>CF-Connecting-IP</code> or <code>X-Real-IP</code> request headers directly.</p>
+<ul>
+<li>SearchProtect now delegates client IP detection to PrestaShop</li>
+</ul>
+<p>  <code>Tools::getRemoteAddr()</code> and falls back to <code>REMOTE_ADDR</code> only when needed.   Shops behind a reverse proxy or CDN should verify their PrestaShop reverse   proxy configuration and core version; otherwise the blocked/logged IP may be   the proxy address, or may follow the core fallback for forwarded headers.</p>
+<h2>[1.0.2] - 2026-06-26</h2>
+<h3>Added</h3>
+<ul>
+<li>Added English, Italian, Spanish, French, German, Portuguese, Polish, Romanian, and Dutch translations.</li>
+<li>Updated module logo asset.</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>Fixed module file comment spacing for PrestaShop license validation.</li>
+</ul>
+<h2>[1.0.1] - 2026-06-26</h2>
+<h3>Fixed</h3>
+<ul>
+<li>Fixed PrestaShop validator coding standard warnings in module guard files.</li>
+<li>Added explicit visibility to module constants.</li>
+</ul>
+<h2>[1.0.0] — 2026-03-25</h2>
+<h3>Added</h3>
+<ul>
+<li>Initial release.</li>
+<li>Hook <code>actionFrontControllerInitBefore</code> to intercept search requests before any DB query.</li>
+<li>Six protection rules: <code>query_too_long</code>, <code>amp_flood</code>, <code>page_injection</code>,</li>
+</ul>
+<p>  <code>querystring_too_long</code>, <code>encoding_abuse</code>, <code>iqit_amp_page_combo</code>.</p>
+<ul>
+<li>Detection of native PrestaShop search controller and localised search slugs</li>
+</ul>
+<p>  (<code>/busqueda</code>, <code>/recherche</code>, <code>/ricerca</code>).</p>
+<ul>
+<li>Detection of third-party search modules: IQITSearch, PS Searchbar,</li>
+</ul>
+<p>  ElasticSearch, nrtSearch, SphinxSearch.</p>
+<ul>
+<li>IP blocking via PrestaShop cache (expiry timestamp stored as value) with</li>
+</ul>
+<p>  file-based JSON fallback in <code>var/logs/searchprotect_blocks.json</code>.</p>
+<ul>
+<li><code>HTTP 429 Too Many Requests</code> response with <code>Retry-After</code> header for blocked requests.</li>
+<li>DB logging of blocked attempts in <code>ps_searchprotect_log</code>.</li>
+<li>Back-office configuration page with <code>HelperForm</code> (all thresholds configurable).</li>
+<li>Smarty template <code>views/templates/admin/logs.tpl</code> for the last 100 blocked requests.</li>
+<li>Italian translation (<code>translations/it.php</code>).</li>
+<li>Security files: <code>index.php</code> in all directories, <code>.htaccess</code> at module root.</li>
+<li><code>config.xml</code>, <code>LICENSE</code> (MIT), <code>README.md</code>, <code>CHANGELOG.md</code>.</li>
+</ul>
+<hr>
+<p>&lt;!-- [Unreleased]: https://github.com/ArteInfoRM/searchprotect/compare/v1.0.3...HEAD --&gt; &lt;!-- [1.0.3]: https://github.com/ArteInfoRM/searchprotect/compare/v1.0.2...v1.0.3 --&gt; &lt;!-- [1.0.2]: https://github.com/ArteInfoRM/searchprotect/compare/v1.0.1...v1.0.2 --&gt; &lt;!-- [1.0.1]: https://github.com/ArteInfoRM/searchprotect/compare/v1.0.0...v1.0.1 --&gt; &lt;!-- [1.0.0]: https://github.com/ArteInfoRM/searchprotect/releases/tag/v1.0.0 --&gt;</p>
+
+</main>
+</body>
+</html>

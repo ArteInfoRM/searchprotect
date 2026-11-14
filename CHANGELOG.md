@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.4] - 2026-11-14
+
+### Fixed
+
+- Reject non-string search parameters with HTTP 400 before string processing,
+  preventing fatal errors for requests such as `s[]=example`.
+- Log a fixed placeholder for invalid parameter types without serializing their
+  contents or temporarily blocking the client IP. Existing abuse rules retain
+  HTTP 429 responses and IP blocking.
+
+### Changed
+
+- Include generated HTML documentation and protect template/configuration files
+  from direct Apache access in the release package.
+
 ## [1.0.3] - 2026-06-26
 
 ### Fixed
