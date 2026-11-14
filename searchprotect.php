@@ -1,5 +1,4 @@
 <?php
-
 /**
  * SearchProtect - PrestaShop Module
  * Protects the search endpoint from DoS/DDoS attacks via malformed or oversized queries.
