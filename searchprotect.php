@@ -1,4 +1,5 @@
 <?php
+
 /**
  * SearchProtect - PrestaShop Module
  * Protects the search endpoint from DoS/DDoS attacks via malformed or oversized queries.
@@ -6,6 +7,7 @@
  * @author    Tecnoacquisti.com
  * @copyright 2026 Tecnoacquisti.com - Arte e Informatica di Loris Modena e c. s.a.s.
  * @license   MIT
+ *
  * @version   1.0.5
  */
 if (!defined('_PS_VERSION_')) {
@@ -342,11 +344,10 @@ class SearchProtect extends Module
             header('Content-Type: text/html; charset=utf-8');
             echo $this->display(__FILE__, 'views/templates/front/invalid-search.tpl');
             exit;
-        } else {
-            $statusCode = 429;
-            header('HTTP/1.1 429 Too Many Requests');
-            header('Retry-After: ' . (int) Configuration::get('SP_BLOCK_DURATION'));
         }
+        $statusCode = 429;
+        header('HTTP/1.1 429 Too Many Requests');
+        header('Retry-After: ' . (int) Configuration::get('SP_BLOCK_DURATION'));
 
         header('Content-Type: text/plain; charset=utf-8');
         echo $statusCode . ' - Request blocked by SearchProtect (' . htmlspecialchars($reason) . ')';
