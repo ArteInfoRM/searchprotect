@@ -7,7 +7,7 @@
  * @copyright 2026 Tecnoacquisti.com - Arte e Informatica di Loris Modena e c. s.a.s.
  * @license   MIT
  *
- * @version   1.0.5
+ * @version   1.0.6
  */
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -26,7 +26,7 @@ class SearchProtect extends Module
     {
         $this->name = 'searchprotect';
         $this->tab = 'others';
-        $this->version = '1.0.5';
+        $this->version = '1.0.6';
         $this->author = 'Tecnoacquisti.com';
         $this->need_instance = 0;
         $this->bootstrap = true;
@@ -143,7 +143,22 @@ class SearchProtect extends Module
         }
 
         $ip = $this->getClientIp();
-        $query = Tools::getValue('s', Tools::getValue('search_query', Tools::getValue('q', '')));
+        foreach ([$_GET, $_POST] as $input) {
+            foreach (['s', 'search_query', 'q', 'tag'] as $name) {
+                if (array_key_exists($name, $input) && !is_string($input[$name])) {
+                    $this->logAttempt($ip, $input[$name], 'invalid_query_type');
+                    $this->denyRequest('invalid_query_type', 400);
+                }
+            }
+        }
+        $query = '';
+        foreach (['s', 'search_query', 'q'] as $name) {
+            $value = Tools::getValue($name, '');
+            if ($value !== '') {
+                $query = $value;
+                break;
+            }
+        }
 
         if ($this->isBlocked($ip)) {
             $this->denyRequest('ip_blocked');

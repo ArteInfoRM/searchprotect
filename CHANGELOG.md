@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.0.6] - 2026-11-15
+
+### Fixed
+
+- Validate every raw GET and POST search alias (`s`, `search_query`, `q`, `tag`)
+  before selecting the query, including empty primary values and masked arrays.
+- Preserve the literal search string `0` when selecting a non-empty query.
+- Extend the input type protection introduced in 1.0.5 to aliases masked by
+  another GET or POST value.
+
 ## [1.0.5] - 2026-11-15
 
 ### Changed

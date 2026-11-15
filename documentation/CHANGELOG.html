@@ -117,6 +117,17 @@
 <p>All notable changes to <strong>SearchProtect</strong> are documented in this file.</p>
 <p>The format follows <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>, and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <hr>
+<h2>[1.0.6] - 2026-11-15</h2>
+<h3>Fixed</h3>
+<ul>
+<li>Validate every raw GET and POST search alias (<code>s</code>, <code>search_query</code>, <code>q</code>, <code>tag</code>)</li>
+</ul>
+<p>  before selecting the query, including empty primary values and masked arrays.</p>
+<ul>
+<li>Preserve the literal search string <code>0</code> when selecting a non-empty query.</li>
+<li>Extend the input type protection introduced in 1.0.5 to aliases masked by</li>
+</ul>
+<p>  another GET or POST value.</p>
 <h2>[1.0.5] - 2026-11-15</h2>
 <h3>Changed</h3>
 <ul>
